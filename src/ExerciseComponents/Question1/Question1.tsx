@@ -20,7 +20,7 @@ function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
   useEffect(() => {
     let countIgnore = false;
 
-    setInterval(() => {
+    let intervalId = setInterval(() => {
       if (!countIgnore) {
         setCount(count => count + 1);
       }
@@ -32,6 +32,7 @@ function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
 
     return () => {
       countIgnore = true;
+      clearInterval(intervalId);
     };
   }, [count, isOpen]);
 
