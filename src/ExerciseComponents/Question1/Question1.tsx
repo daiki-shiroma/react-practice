@@ -16,13 +16,12 @@ const INITIAL_COUNT = 0; // タイマーの初期値
 
 function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
   const [count, setCount] = useState(0);
-  const intervalRef: any = useRef(0);
 
   useEffect(() => {
-    let ignore = false;
+    let countIgnore = false;
 
-    intervalRef.current = setInterval(() => {
-      if (!ignore) {
+    setInterval(() => {
+      if (!countIgnore) {
         setCount(count + 1);
       }
     }, 1000);
@@ -32,7 +31,7 @@ function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
     }
 
     return () => {
-      ignore = true;
+      countIgnore = true;
     };
   }, [count, isOpen]);
 
