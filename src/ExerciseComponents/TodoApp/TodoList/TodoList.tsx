@@ -11,37 +11,35 @@ export function TodoList({ todoList }: TodoListProps) {
   const filteredTodoList = todoList;
 
   if (!isTodoListExist) {
-    return <p> タスクがありません。</p>
+    return <p>タスクがありません。</p>
   }
 
   return (
-    <>
-      <List spacing={2} w="100%">
-        {filteredTodoList.map((todo) => {
-          return (
-            <ListItem key={todo.id}>
-              <HStack justify="space-between">
-                <Checkbox
-                  isChecked={todo.completed}
-                  onChange={() => {
-                    alert("実装してください");
-                  }}
-                >
-                  {todo.title}
-                </Checkbox>
-                <Button
-                  size="xs"
-                  onClick={() => {
-                    alert("実装してください");
-                  }}
-                >
-                  削除
-                </Button>
-              </HStack>
-            </ListItem>
-          );
-        })}
-      </List>
-    </>
+    <List spacing={2} w="100%">
+      {filteredTodoList.map((todo) => {
+        return (
+          <ListItem key={todo.id}>
+            <HStack justify="space-between">
+              <Checkbox
+                isChecked={todo.completed}
+                onChange={() => {
+                  alert("実装してください");
+                }}
+              >
+                {todo.title}
+              </Checkbox>
+              <Button
+                size="xs"
+                onClick={() => {
+                  alert("実装してください");
+                }}
+              >
+                削除
+              </Button>
+            </HStack>
+          </ListItem>
+        );
+      })}
+    </List>
   );
 }
