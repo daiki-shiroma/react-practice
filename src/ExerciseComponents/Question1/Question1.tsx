@@ -19,7 +19,7 @@ function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCount(count => count + 1);
+      setCount(count => count + 1); // stateではなく更新用のキューを見るので、依存配列にcountがなくても動く？
     }, 1000);
 
     if (!isOpen) {
@@ -30,7 +30,7 @@ function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
     return () => {
       clearInterval(intervalId);
     };
-  }, [count, isOpen]);
+  }, [isOpen]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
