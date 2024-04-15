@@ -8,6 +8,7 @@ export function useTodoListFilter() {
   const handleQueryChange = (value: string) => {
     setQuery(value);
   };
+
   const handleFilterStatusChange = (status: string) => {
     if (isTodoFilterStatus(status)) {
       setStatus(status);

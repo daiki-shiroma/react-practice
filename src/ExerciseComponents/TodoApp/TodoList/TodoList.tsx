@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
 import { Button, Checkbox, HStack, List, ListItem } from "@chakra-ui/react";
 import { Todo } from "../Todo.type";
 import { type TodoFilterStatus } from "../TodoListFilter/TodoListFilter.type";
+import { useTodoList } from "./useTodoList";
 
 type TodoListProps = {
   todoList: Todo[];
@@ -10,36 +10,10 @@ type TodoListProps = {
 };
 
 export function TodoList({ todoList, query, status }: TodoListProps) {
-  const [filteredTodoList, setFilteredTodoList] = useState<Todo[]>(todoList);
+  const filterTodo = useTodoList();
+  const filteredByStatusList = filterTodo.filteredByStatus(todoList, status);
+  const filteredTodoList = filterTodo.filteredByQuery(filteredByStatusList, query);
   const isTodoListExist = filteredTodoList.length > 0;
-
-  const filteredByStatus = (todoList: Todo[]) => {
-    if (status === 'all') return [...todoList];
-
-    if (status === 'completed' || status === 'active') {
-      const isComplete = status === 'completed';
-      const statusResult = todoList.filter(
-        todo => todo.completed === isComplete
-      )
-      return statusResult;
-    }
-    else {
-      return [...todoList];
-    }
-  }
-
-  const filteredByQuery = (todoList: Todo[]) => {
-    if (query === undefined) return [...todoList];
-
-    const queryResult = todoList.filter(
-      todo => (todo.title.includes(query)));
-    return queryResult;
-  }
-
-  useEffect(() => {
-    const filteredList = filteredByQuery(filteredByStatus(todoList));
-    setFilteredTodoList(filteredList);
-  }, [todoList, query, status]);
 
   if (!isTodoListExist) {
     return <p>タスクがありません。</p>
