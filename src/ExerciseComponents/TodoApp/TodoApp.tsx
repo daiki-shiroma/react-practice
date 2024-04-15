@@ -2,7 +2,6 @@ import { Box, VStack } from "@chakra-ui/react";
 import { TodoListFilter } from "./TodoListFilter/TodoListFilter";
 import { useTodoListFilter } from "./TodoListFilter/useTodoListFilter";
 import { TodoList } from "./TodoList/TodoList";
-
 import { defaultTodoList } from "./Todo.fixture";
 
 export function TodoApp() {
