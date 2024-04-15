@@ -1,31 +1,45 @@
+import { useState, useEffect } from "react";
 import { Button, Checkbox, HStack, List, ListItem } from "@chakra-ui/react";
 import { Todo } from "../Todo.type";
+import { type TodoFilterStatus } from "../TodoListFilter/TodoListFilter.type";
 
 type TodoListProps = {
   todoList: Todo[];
   query: string | undefined;
-  status: string;
+  status: TodoFilterStatus;
 };
 
 export function TodoList({ todoList, query, status }: TodoListProps) {
-  // TODO: フィルタリングロジックを実装してください https://github.com/Ryochike/react-practice/issues/7
-  const isTodoListExist = todoList.length > 0;
+  const [filteredTodoList, setFilteredTodoList] = useState<Todo[]>(todoList);
+  const isTodoListExist = filteredTodoList.length > 0;
 
-  let filteredTodoList = todoList;
+  const filteredByStatus = (todoList: Todo[]) => {
+    if (status === 'all') return [...todoList];
 
-  if (query !== undefined) {
+    if (status === 'completed' || status === 'active') {
+      const isStatus = status === 'completed';
+      const statusResult = todoList.filter(
+        todo => todo.completed === isStatus
+      )
+      return statusResult;
+    }
+    else {
+      return [...todoList];
+    }
+  }
+
+  const filteredByQuery = (todoList: Todo[]) => {
+    if (query === undefined) return [...todoList];
+
     const queryResult = todoList.filter(
       todo => (todo.title.includes(query)));
-    filteredTodoList = queryResult;
+    return queryResult;
   }
 
-  if (status === 'completed' || status === 'active') {
-    let isStatus = status === 'completed';
-    const statusResult = todoList.filter(
-      todo => todo.completed === isStatus
-    )
-    filteredTodoList = statusResult;
-  }
+  useEffect(() => {
+    const filteredList = filteredByQuery(filteredByStatus(todoList));
+    setFilteredTodoList(filteredList);
+  }, [todoList, query, status]);
 
   if (!isTodoListExist) {
     return <p>タスクがありません。</p>
