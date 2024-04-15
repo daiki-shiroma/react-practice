@@ -18,12 +18,8 @@ function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
   const [count, setCount] = useState(INITIAL_COUNT);
 
   useEffect(() => {
-    let countIgnore = false;
-
-    let intervalId = setInterval(() => {
-      if (!countIgnore) {
-        setCount(count => count + 1);
-      }
+    const intervalId = setInterval(() => {
+      setCount(count => count + 1);
     }, 1000);
 
     if (!isOpen) {
@@ -31,7 +27,6 @@ function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
     }
 
     return () => {
-      countIgnore = true;
       clearInterval(intervalId);
     };
   }, [count, isOpen]);
