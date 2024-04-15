@@ -24,6 +24,7 @@ function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
 
     if (!isOpen) {
       setCount(INITIAL_COUNT);
+      clearInterval(intervalId);
     }
 
     return () => {
