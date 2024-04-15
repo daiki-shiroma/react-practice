@@ -11,7 +11,7 @@ export function TodoApp() {
     <Box as="main" p={4} maxWidth={300} mx="auto">
       <VStack gap={4} align="start">
         <TodoListFilter {...todoListFilter} />
-        <TodoList todoList={defaultTodoList} />
+        <TodoList todoList={defaultTodoList} query={todoListFilter.query} status={todoListFilter.status} />
       </VStack>
     </Box>
   );
