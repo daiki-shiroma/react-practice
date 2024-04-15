@@ -4,10 +4,6 @@ import type { UseTodoListFilterReturn } from "./useTodoListFilter";
 
 export type TodoListFilterProps = UseTodoListFilterReturn;
 
-/**
- * @see https://github.com/Ryochike/react-practice/issues/7
- */
-
 export function TodoListFilter({
   query,
   status,
