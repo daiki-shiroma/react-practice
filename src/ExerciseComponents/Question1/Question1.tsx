@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Button,
   Modal,
@@ -12,13 +12,32 @@ import {
   Center,
 } from "@chakra-ui/react";
 
+const INITIAL_COUNT = 0; // タイマーの初期値
+
 function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
   const [count, setCount] = useState(0);
+
+  const intervalRef: any = useRef(0);
+
   useEffect(() => {
-    setInterval(() => {
-      setCount(count + 1);
+    let ignore = false;
+
+    intervalRef.current = setInterval(() => {
+      if (!ignore) {
+        setCount(count + 1);
+      }
     }, 1000);
-  }, []);
+
+    if (!isOpen) {
+      setCount(INITIAL_COUNT);
+    }
+    console.log(intervalRef);
+
+    return () => {
+      ignore = true;
+    };
+  }, [count, isOpen]);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
