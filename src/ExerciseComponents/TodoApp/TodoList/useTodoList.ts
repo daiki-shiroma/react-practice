@@ -32,7 +32,7 @@ export function useTodoList() {
     });
   }, []);
 
-  const filteredByStatus = (todoList: Todo[], status: string) => {
+  const filterByStatus = (todoList: Todo[], status: string) => {
     if (status === 'all') return [...todoList];
 
     if (status === 'completed' || status === 'active') {
@@ -47,7 +47,7 @@ export function useTodoList() {
     }
   }
 
-  const filteredByQuery = (todoList: Todo[], query: string | undefined) => {
+  const filterByQuery = (todoList: Todo[], query: string | undefined) => {
     if (query === undefined) return [...todoList];
 
     const queryResult = todoList.filter(
@@ -60,8 +60,8 @@ export function useTodoList() {
     toggleTodo,
     createTodo,
     deleteTodo,
-    filteredByStatus,
-    filteredByQuery,
+    filterByStatus,
+    filterByQuery,
   };
 }
 

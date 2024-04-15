@@ -11,8 +11,8 @@ type TodoListProps = {
 
 export function TodoList({ todoList, query, status }: TodoListProps) {
   const filterTodo = useTodoList();
-  const filteredByStatusList = filterTodo.filteredByStatus(todoList, status);
-  const filteredTodoList = filterTodo.filteredByQuery(filteredByStatusList, query);
+  const filteredByStatusList = filterTodo.filterByStatus(todoList, status);
+  const filteredTodoList = filterTodo.filterByQuery(filteredByStatusList, query);
   const isTodoListExist = filteredTodoList.length > 0;
 
   if (!isTodoListExist) {
