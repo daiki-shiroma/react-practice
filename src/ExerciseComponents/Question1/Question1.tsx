@@ -22,12 +22,8 @@ function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
       setCount(count => count + 1); // stateではなく更新用のキューを見るので、依存配列にcountがなくても動く？
     }, 1000);
 
-    if (!isOpen) {
-      setCount(INITIAL_COUNT);
-      clearInterval(intervalId);
-    }
-
     return () => {
+      setCount(INITIAL_COUNT);
       clearInterval(intervalId);
     };
   }, [isOpen]);
