@@ -17,9 +17,9 @@ export function TodoList({ todoList, query, status }: TodoListProps) {
     if (status === 'all') return [...todoList];
 
     if (status === 'completed' || status === 'active') {
-      const isStatus = status === 'completed';
+      const isComplete = status === 'completed';
       const statusResult = todoList.filter(
-        todo => todo.completed === isStatus
+        todo => todo.completed === isComplete
       )
       return statusResult;
     }
