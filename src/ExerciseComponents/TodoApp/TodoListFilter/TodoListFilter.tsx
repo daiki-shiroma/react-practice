@@ -1,4 +1,4 @@
-import { VStack } from "@chakra-ui/react";
+import { VStack, Input } from "@chakra-ui/react";
 import type { UseTodoListFilterReturn } from "./useTodoListFilter";
 
 export type TodoListFilterProps = UseTodoListFilterReturn;
@@ -14,7 +14,7 @@ export function TodoListFilter({
 }: TodoListFilterProps) {
   return (
     <VStack>
-      <p>検索フィルタのUIを実装してください</p>
+      <Input placeholder='タスク名を入力' />
     </VStack>
   );
 }
