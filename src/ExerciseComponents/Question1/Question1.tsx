@@ -22,7 +22,7 @@ function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
 
     setInterval(() => {
       if (!countIgnore) {
-        setCount(count + 1);
+        setCount(count => count + 1);
       }
     }, 1000);
 
