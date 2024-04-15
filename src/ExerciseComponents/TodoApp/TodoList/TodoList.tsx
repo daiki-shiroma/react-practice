@@ -7,7 +7,12 @@ type TodoListProps = {
 
 export function TodoList({ todoList }: TodoListProps) {
   // TODO: フィルタリングロジックを実装してください https://github.com/Ryochike/react-practice/issues/7
+  const isTodoListExist = todoList.length > 0;
   const filteredTodoList = todoList;
+
+  if (!isTodoListExist) {
+    return <p>タスクがありません。</p>
+  }
 
   return (
     <List spacing={2} w="100%">
