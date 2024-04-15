@@ -15,7 +15,7 @@ import {
 const INITIAL_COUNT = 0; // タイマーの初期値
 
 function TimerModal({ isOpen, onClose }: { isOpen: any; onClose: any }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(INITIAL_COUNT);
 
   useEffect(() => {
     let countIgnore = false;
