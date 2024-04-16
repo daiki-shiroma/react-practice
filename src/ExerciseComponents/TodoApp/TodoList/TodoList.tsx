@@ -31,8 +31,14 @@ export function TodoList({ todoList, query, status }: TodoListProps) {
   }
 
   useEffect(() => {
+    setDisplayTodoList(filteredTodoList);
     console.log(displayTodoList);
-  }, [displayTodoList,filteredTodoList,filteredByStatusList]);
+  }, [filteredTodoList]);
+
+
+  useEffect(() => {
+    console.log(displayTodoList);
+  }, [displayTodoList,status,query]);
 
   if (!isTodoListExist) {
     return <p>タスクがありません。</p>
