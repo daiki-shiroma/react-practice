@@ -1,4 +1,4 @@
-import { useMemo } from "react"; 
+import { useMemo, useState } from "react";
 import { Button, Checkbox, HStack, List, ListItem } from "@chakra-ui/react";
 import { Todo } from "../Todo.type";
 import { type TodoFilterStatus } from "../TodoListFilter/TodoListFilter.type";
@@ -16,12 +16,14 @@ export function TodoList({ todoList, query, status }: TodoListProps) {
   const filteredByStatusList = useMemo(() => {
     return filterTodo.filterByStatus(todoList, status);
   }, [todoList, status]);
-  
+
   const filteredTodoList = useMemo(() => {
     return filterTodo.filterByQuery(filteredByStatusList, query);
   }, [filteredByStatusList, query]);
-  
+
   const isTodoListExist = filteredTodoList.length > 0;
+
+  const [displayTodoList, setDisplayTodoList] = useState<Todo[]>(filteredTodoList);
 
   if (!isTodoListExist) {
     return <p>タスクがありません。</p>
@@ -29,14 +31,16 @@ export function TodoList({ todoList, query, status }: TodoListProps) {
 
   return (
     <List spacing={2} w="100%">
-      {filteredTodoList.map((todo) => {
+      {displayTodoList.map((todo) => {
         return (
           <ListItem key={todo.id}>
             <HStack justify="space-between">
               <Checkbox
                 isChecked={todo.completed}
                 onChange={() => {
-                  alert("実装してください");
+                  const result = filterTodo.toggleTodo({ id: todo.id });
+                  console.log(result);
+                  // setで更新する？
                 }}
               >
                 {todo.title}
