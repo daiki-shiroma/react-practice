@@ -13,34 +13,30 @@ type TodoListProps = {
 export function TodoList({ todoList, query, status }: TodoListProps) {
   const filterTodo = useTodoList();
 
-  const filteredByStatusList = useMemo(() => {
-    return filterTodo.filterByStatus(todoList, status);
-  }, [todoList, status]);
+  const [displayTodoList, setDisplayTodoList] = useState<Todo[]>(todoList);
 
-  const filteredTodoList = useMemo(() => {
+  const filterTodoList = (todoList: Todo[], status: TodoFilterStatus, query: string | undefined) => { //todolistそのものは変えない
+    const filteredByStatusList = filterTodo.filterByStatus(todoList, status);
     return filterTodo.filterByQuery(filteredByStatusList, query);
-  }, [filteredByStatusList, query]);
-
-  const isTodoListExist = filteredTodoList.length > 0;
-
-  const [displayTodoList, setDisplayTodoList] = useState<Todo[]>(filteredTodoList);
-
-  const handleChangeTodo = (todoId:number) => {
+  }
+  
+  const handleChangeTodo = (todoId: number) => { //todolistそのものを変えるが、変わっていない
     filterTodo.toggleTodo({ id: todoId });
-    setDisplayTodoList(prevState => prevState.map(todo => todo.id === todoId ? { ...todo, completed: !todo.completed } : todo));
+    console.log(todoList);
+  }
+
+  const handleDeleteTodo = (todoId: number) => { //todolistそのものを変えるが、変わっていない
+    filterTodo.deleteTodo({ id: todoId });
+    setDisplayTodoList(prevState => prevState.filter(todo => todo.id !== todoId));
   }
 
   useEffect(() => {
-    setDisplayTodoList(filteredTodoList);
-    console.log(displayTodoList);
-  }, [filteredTodoList]);
+    const result = filterTodoList(todoList, status, query);
+    setDisplayTodoList(result);
+    console.log(result);
+   }, [todoList, status, query]);
 
-
-  useEffect(() => {
-    console.log(displayTodoList);
-  }, [displayTodoList,status,query]);
-
-  if (!isTodoListExist) {
+  if (displayTodoList.length<=0) {
     return <p>タスクがありません。</p>
   }
 
