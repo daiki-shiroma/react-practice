@@ -7,23 +7,23 @@ type TodoListState = {
 
 type TodoListAction =
   | {
-      type: "toggle";
-      payload: {
-        id: number;
-      };
-    }
-  | {
-      type: "create";
-      payload: {
-        title: string;
-      };
-    }
-  | {
-      type: "delete";
-      payload: {
-        id: number;
-      };
+    type: "toggle";
+    payload: {
+      id: number;
     };
+  }
+  | {
+    type: "create";
+    payload: {
+      title: string;
+    };
+  }
+  | {
+    type: "delete";
+    payload: {
+      id: number;
+    };
+  };
 
 export const initialState: TodoListState = {
   todoList: defaultTodoList,
@@ -35,16 +35,18 @@ export const reducer = (
 ): TodoListState => {
   switch (action.type) {
     case "toggle":
-      // TODO: トグルロジックを実装してください https://github.com/Ryochike/react-practice/issues8
-      const result = {
+      return {
         ...state,
-        todoList: state.todoList.map((todo) =>
-          todo.id === action.payload.id
-            ? { ...todo, completed: !todo.completed }
-            : todo
-        ),
+        todoList: state.todoList.map((todo) => {
+          if (todo.id !== action.payload.id) {
+            return todo;
+          }
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        }),
       };
-      return result;
     case "create":
       // TODO: 作成ロジックを実装してください https://github.com/Ryochike/react-practice/issues/10
       // return [...state, action.payload];
