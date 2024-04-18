@@ -1,42 +1,29 @@
-import { useMemo, useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button, Checkbox, HStack, List, ListItem } from "@chakra-ui/react";
 import { Todo } from "../Todo.type";
 import { type TodoFilterStatus } from "../TodoListFilter/TodoListFilter.type";
 import { useTodoList } from "./useTodoList";
 
 type TodoListProps = {
-  todoList: Todo[];
   query: string | undefined;
   status: TodoFilterStatus;
 };
 
-export function TodoList({ todoList, query, status }: TodoListProps) {
-  const filterTodo = useTodoList();
+export function TodoList({ query, status }: TodoListProps) {
+  const { todoList, toggleTodo, deleteTodo, filterByStatus, filterByQuery } = useTodoList();
 
   const [displayTodoList, setDisplayTodoList] = useState<Todo[]>(todoList);
 
-  const filterTodoList = (todoList: Todo[], status: TodoFilterStatus, query: string | undefined) => { //todolistそのものは変えない
-    const filteredByStatusList = filterTodo.filterByStatus(todoList, status);
-    return filterTodo.filterByQuery(filteredByStatusList, query);
-  }
-  
-  const handleChangeTodo = (todoId: number) => { //todolistそのものを変えるが、変わっていない
-    filterTodo.toggleTodo({ id: todoId });
-    console.log(todoList);
-  }
-
-  const handleDeleteTodo = (todoId: number) => { //todolistそのものを変えるが、変わっていない
-    filterTodo.deleteTodo({ id: todoId });
-    setDisplayTodoList(prevState => prevState.filter(todo => todo.id !== todoId));
+  const useTodoListInstanceList = (status: TodoFilterStatus, query: string | undefined) => {
+    const filteredByStatusList = filterByStatus(todoList, status);
+    return filterByQuery(filteredByStatusList, query);
   }
 
   useEffect(() => {
-    const result = filterTodoList(todoList, status, query);
-    setDisplayTodoList(result);
-    console.log(result);
-   }, [todoList, status, query]);
+    setDisplayTodoList(useTodoListInstanceList(status, query));
+  }, [todoList, status, query]);
 
-  if (displayTodoList.length<=0) {
+  if (displayTodoList.length <= 0) {
     return <p>タスクがありません。</p>
   }
 
@@ -48,8 +35,8 @@ export function TodoList({ todoList, query, status }: TodoListProps) {
             <HStack justify="space-between">
               <Checkbox
                 isChecked={todo.completed}
-                onChange={()=>{
-                  handleChangeTodo(todo.id);
+                onChange={() => {
+                  toggleTodo({ id: todo.id });
                 }}
               >
                 {todo.title}
@@ -57,7 +44,7 @@ export function TodoList({ todoList, query, status }: TodoListProps) {
               <Button
                 size="xs"
                 onClick={() => {
-                  alert("実装してください");
+                  deleteTodo({ id: todo.id });
                 }}
               >
                 削除

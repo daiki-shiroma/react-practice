@@ -1,4 +1,4 @@
-import { createTodoFixture, defaultTodoList } from "../Todo.fixture";
+import { defaultTodoList } from "../Todo.fixture";
 import { Todo } from "../Todo.type";
 
 type TodoListState = {
