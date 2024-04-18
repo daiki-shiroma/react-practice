@@ -14,13 +14,13 @@ export function TodoList({ query, status }: TodoListProps) {
 
   const [displayTodoList, setDisplayTodoList] = useState<Todo[]>(todoList);
 
-  const useTodoListInstanceList = (status: TodoFilterStatus, query: string | undefined) => {
+  const filterTodoList = () => {
     const filteredByStatusList = filterByStatus(todoList, status);
     return filterByQuery(filteredByStatusList, query);
   }
 
   useEffect(() => {
-    setDisplayTodoList(useTodoListInstanceList(status, query));
+    setDisplayTodoList(filterTodoList());
   }, [todoList, status, query]);
 
   if (displayTodoList.length <= 0) {
