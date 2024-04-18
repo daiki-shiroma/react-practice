@@ -36,7 +36,6 @@ export const reducer = (
   switch (action.type) {
     case "toggle":
       return {
-        ...state,
         todoList: state.todoList.map((todo) => {
           if (todo.id !== action.payload.id) {
             return todo;
