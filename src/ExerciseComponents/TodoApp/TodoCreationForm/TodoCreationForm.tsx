@@ -37,6 +37,7 @@ export function TodoCreationForm({ createTodo }: TodoCreationFormProps) {
 
     createTodo({ title: newTaskName });
     setNewTaskName("");
+    setTitleError(undefined);
   }
 
   return (
