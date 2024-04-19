@@ -51,9 +51,9 @@ export const reducer = (
       // return [...state, action.payload];
       return state;
     case "delete":
-      // TODO: 削除ロジックを実装してください https://github.com/Ryochike/react-practice/issues/9
-      // return state.filter(todo => todo.id !== action.payload.id);
-      return state;
+      return {
+        todoList: state.todoList.filter((todo) => todo.id !== action.payload.id),
+      };
     default:
       return state;
   }
