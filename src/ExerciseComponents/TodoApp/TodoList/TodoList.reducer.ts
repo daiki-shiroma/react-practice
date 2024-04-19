@@ -47,7 +47,7 @@ export const reducer = (
         }),
       };
     case "create":
-      const result = {
+      return {
         todoList: [
           ...state.todoList,
           {
@@ -57,8 +57,6 @@ export const reducer = (
           },
         ]
       }
-      console.log(result, "result")
-      return result;
     case "delete":
       return {
         todoList: state.todoList.filter((todo) => todo.id !== action.payload.id),

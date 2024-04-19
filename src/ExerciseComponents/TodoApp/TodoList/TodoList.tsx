@@ -1,16 +1,18 @@
 import { useMemo } from "react";
 import { Button, Checkbox, HStack, List, ListItem } from "@chakra-ui/react";
 import { type TodoFilterStatus } from "../TodoListFilter/TodoListFilter.type";
-import { useTodoList } from "./useTodoList";
 import { filterTodoList } from "./filterTodoList";
+import { Todo } from "../Todo.type";
 
 type TodoListProps = {
   query: string | undefined;
   status: TodoFilterStatus;
+  todoList: Todo[];
+  toggleTodo: (payload: { id: number }) => void;
+  deleteTodo: (payload: { id: number }) => void;
 };
 
-export function TodoList({ query, status }: TodoListProps) {
-  const { todoList, toggleTodo, deleteTodo } = useTodoList();
+export function TodoList({ query, status, todoList, toggleTodo, deleteTodo }: TodoListProps) {
   const { filterByStatus, filterByQuery } = filterTodoList();
 
   const filteredTodoList = useMemo(() => {

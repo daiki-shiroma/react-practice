@@ -6,7 +6,6 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import { useTodoList } from "../TodoList/useTodoList";
 
 type TodoCreationFormProps = {
   onCreateTodo: (title: string) => void;
@@ -16,7 +15,6 @@ export function TodoCreationForm({ onCreateTodo }: TodoCreationFormProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const [titleError, setTitleError] = useState<string | undefined>(undefined);
   const [newTaskName, setNewTaskName] = useState<string>("");
-  const { createTodo, todoList } = useTodoList();
 
   return (
     <form
@@ -32,10 +30,8 @@ export function TodoCreationForm({ onCreateTodo }: TodoCreationFormProps) {
           return;
         }
 
-        // onCreateTodo(newTaskName);
-        createTodo({ title: newTaskName });
+        onCreateTodo(newTaskName);
         setNewTaskName("");
-        console.log(todoList, "todoList")
       }}
     >
       <HStack gap={2} align="start">
