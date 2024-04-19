@@ -14,7 +14,7 @@ export function TodoApp() {
     <Box as="main" p={4} maxWidth={300} mx="auto">
       <VStack gap={4} align="start">
         <TodoListFilter {...todoListFilter} />
-        <TodoCreationForm onCreateTodo={() => { createTodo }} />
+        <TodoCreationForm createTodo={createTodo} />
         <TodoList
           query={todoListFilter.query} status={todoListFilter.status} todoList={todoList} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
       </VStack>
