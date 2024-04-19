@@ -15,30 +15,32 @@ type TodoCreationFormProps = {
 export function TodoCreationForm({ onCreateTodo }: TodoCreationFormProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const [titleError, setTitleError] = useState<string | undefined>(undefined);
-
+  const [newTaskName, setNewTaskName] = useState<string>("");
   const { createTodo, todoList } = useTodoList();
-
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (titleRef.current?.value === '' || titleRef.current?.value === undefined) {
-          setTitleError("タスク名を入力してください")
+        if ((titleRef.current === null)) {
           return;
         }
-        // onCreateTodo(titleRef.current?.value);
-        createTodo({
-          title: titleRef.current?.value
-        });
 
+        if (newTaskName.trim() === "") {
+          setTitleError("タスク名を入力してください")
+          titleRef.current.focus();
+          return;
+        }
+
+        // onCreateTodo(newTaskName);
+        createTodo({ title: newTaskName });
+        setNewTaskName("");
         console.log(todoList, "todoList")
-        titleRef.current!.value = "";
       }}
     >
       <HStack gap={2} align="start">
         <FormControl isInvalid={!!titleError}>
-          <Input ref={titleRef} size="sm" placeholder="Learn React" />
+          <Input ref={titleRef} value={newTaskName} size="sm" placeholder="Learn React" onChange={e => setNewTaskName(e.target.value)} />
           <FormErrorMessage>{titleError}</FormErrorMessage>
         </FormControl>
         <Button type="submit" size="sm">
