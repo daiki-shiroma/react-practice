@@ -20,7 +20,7 @@ export function TodoCreationForm({ onCreateTodo }: TodoCreationFormProps) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if ((titleRef.current === null)) {
+        if (titleRef.current === null) {
           return;
         }
 
