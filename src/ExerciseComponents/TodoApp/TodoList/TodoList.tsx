@@ -1,29 +1,24 @@
-import { useMemo } from "react"; 
+import { useMemo } from "react";
 import { Button, Checkbox, HStack, List, ListItem } from "@chakra-ui/react";
-import { Todo } from "../Todo.type";
 import { type TodoFilterStatus } from "../TodoListFilter/TodoListFilter.type";
 import { useTodoList } from "./useTodoList";
+import { filterTodoList } from "./filterTodoList";
 
 type TodoListProps = {
-  todoList: Todo[];
   query: string | undefined;
   status: TodoFilterStatus;
 };
 
-export function TodoList({ todoList, query, status }: TodoListProps) {
-  const filterTodo = useTodoList();
+export function TodoList({ query, status }: TodoListProps) {
+  const { todoList, toggleTodo, deleteTodo } = useTodoList();
+  const { filterByStatus, filterByQuery } = filterTodoList();
 
-  const filteredByStatusList = useMemo(() => {
-    return filterTodo.filterByStatus(todoList, status);
-  }, [todoList, status]);
-  
   const filteredTodoList = useMemo(() => {
-    return filterTodo.filterByQuery(filteredByStatusList, query);
-  }, [filteredByStatusList, query]);
-  
-  const isTodoListExist = filteredTodoList.length > 0;
+    const filteredByStatusList = filterByStatus(todoList, status);
+    return filterByQuery(filteredByStatusList, query);
+  }, [todoList, status, query]);
 
-  if (!isTodoListExist) {
+  if (filteredTodoList.length === 0) {
     return <p>タスクがありません。</p>
   }
 
@@ -36,7 +31,7 @@ export function TodoList({ todoList, query, status }: TodoListProps) {
               <Checkbox
                 isChecked={todo.completed}
                 onChange={() => {
-                  alert("実装してください");
+                  toggleTodo({ id: todo.id });
                 }}
               >
                 {todo.title}
@@ -44,7 +39,7 @@ export function TodoList({ todoList, query, status }: TodoListProps) {
               <Button
                 size="xs"
                 onClick={() => {
-                  alert("実装してください");
+                  deleteTodo({ id: todo.id });
                 }}
               >
                 削除
