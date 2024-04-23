@@ -7,28 +7,46 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 
+import { UseTodoListReturn } from "../TodoList/useTodoList"; //createTodoの型を受け取る
+
 type TodoCreationFormProps = {
-  onCreateTodo: (title: string) => void;
+  createTodo: UseTodoListReturn["createTodo"];
 };
 
-export function TodoCreationForm({ onCreateTodo }: TodoCreationFormProps) {
-  const titleRef = useRef<HTMLInputElement>(null);
+export function TodoCreationForm({ createTodo }: TodoCreationFormProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [titleError, setTitleError] = useState<string | undefined>(undefined);
+  const [newTaskName, setNewTaskName] = useState<string>("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTaskName(e.target.value);
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (inputRef.current === null) {
+      return;
+    }
+
+    if (newTaskName.trim() === "") {
+      setTitleError("タスク名を入力してください")
+      inputRef.current.focus();
+      return;
+    }
+
+    createTodo({ title: newTaskName });
+    setNewTaskName("");
+    setTitleError(undefined);
+  }
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (titleRef.current === null) {
-          return;
-        }
-        // TODO: 入力された値でタスクを作成する処理を実装してください https://github.com/Ryochike/react-practice/issues/10
-        onCreateTodo("TODO");
-      }}
+      onSubmit={handleSubmit}
     >
       <HStack gap={2} align="start">
         <FormControl isInvalid={!!titleError}>
-          <Input ref={titleRef} size="sm" placeholder="Learn React" />
+          <Input ref={inputRef} value={newTaskName} size="sm" placeholder="Learn React" onChange={handleChange} />
           <FormErrorMessage>{titleError}</FormErrorMessage>
         </FormControl>
         <Button type="submit" size="sm">

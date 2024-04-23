@@ -13,7 +13,7 @@ export function TodoListFilter({
 
   return (
     <VStack>
-      <Input placeholder='タスク名を入力' value={query} onChange={(e) => handleQueryChange(e.target.value)} />
+      <Input placeholder='検索' value={query} onChange={(e) => handleQueryChange(e.target.value)} />
       <RadioGroup onChange={(nextValue) => handleFilterStatusChange(nextValue)} value={status}>
         <Stack direction='row'>
           <Radio value='all'>全て</Radio>

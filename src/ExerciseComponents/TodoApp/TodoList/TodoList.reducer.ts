@@ -47,13 +47,20 @@ export const reducer = (
         }),
       };
     case "create":
-      // TODO: 作成ロジックを実装してください https://github.com/Ryochike/react-practice/issues/10
-      // return [...state, action.payload];
-      return state;
+      return {
+        todoList: [
+          ...state.todoList,
+          {
+            id: state.todoList.length + 1,
+            title: action.payload.title,
+            completed: false,
+          },
+        ]
+      }
     case "delete":
-      // TODO: 削除ロジックを実装してください https://github.com/Ryochike/react-practice/issues/9
-      // return state.filter(todo => todo.id !== action.payload.id);
-      return state;
+      return {
+        todoList: state.todoList.filter((todo) => todo.id !== action.payload.id),
+      };
     default:
       return state;
   }
