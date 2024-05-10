@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Button, Checkbox, HStack, List, ListItem } from "@chakra-ui/react";
 import { type TodoFilterStatus } from "../TodoListFilter/TodoListFilter.type";
-import { filterTodoList } from "./filterTodoList";
+import { selectTodosFromTodoList } from "./selectTodosFromTodoList";
 import { Todo } from "../Todo.type";
 
 type TodoListProps = {
@@ -13,20 +13,20 @@ type TodoListProps = {
 };
 
 export function TodoList({ query, status, todoList, toggleTodo, deleteTodo }: TodoListProps) {
-  const { filterByStatus, filterByQuery } = filterTodoList();
+  const { selectByStatus, selectByQuery } = selectTodosFromTodoList();
 
-  const filteredTodoList = useMemo(() => {
-    const filteredByStatusList = filterByStatus(todoList, status);
-    return filterByQuery(filteredByStatusList, query);
+  const selectedTodoList = useMemo(() => {
+    const filteredByStatusList = selectByStatus(todoList, status);
+    return selectByQuery(filteredByStatusList, query);
   }, [todoList, status, query]);
 
-  if (filteredTodoList.length === 0) {
+  if (selectedTodoList.length === 0) {
     return <p>タスクがありません。</p>
   }
 
   return (
     <List spacing={2} w="100%">
-      {filteredTodoList.map((todo) => {
+      {selectedTodoList.map((todo) => {
         return (
           <ListItem key={todo.id}>
             <HStack justify="space-between">
