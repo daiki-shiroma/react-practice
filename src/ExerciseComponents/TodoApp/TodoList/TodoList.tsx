@@ -1,8 +1,8 @@
-import { useMemo } from "react";
 import { Button, Checkbox, HStack, List, ListItem } from "@chakra-ui/react";
+import React, { useMemo } from "react";
+import { Todo } from "../Todo.type";
 import { type TodoFilterStatus } from "../TodoListFilter/TodoListFilter.type";
 import { selectTodosFromTodoList } from "./selectTodosFromTodoList";
-import { Todo } from "../Todo.type";
 
 type TodoListProps = {
   query: string | undefined;
