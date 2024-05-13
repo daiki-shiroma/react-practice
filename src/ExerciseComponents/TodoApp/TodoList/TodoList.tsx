@@ -12,7 +12,13 @@ type TodoListProps = {
   deleteTodo: (payload: { id: number }) => void;
 };
 
-export function TodoList({ query, status, todoList, toggleTodo, deleteTodo }: TodoListProps) {
+export function TodoList({
+  query,
+  status,
+  todoList,
+  toggleTodo,
+  deleteTodo,
+}: TodoListProps) {
   const { selectByStatus, selectByQuery } = selectTodosFromTodoList();
 
   const selectedTodoList = useMemo(() => {
@@ -21,7 +27,7 @@ export function TodoList({ query, status, todoList, toggleTodo, deleteTodo }: To
   }, [todoList, status, query]);
 
   if (selectedTodoList.length === 0) {
-    return <p>タスクがありません。</p>
+    return <p>タスクがありません。</p>;
   }
 
   return (
