@@ -1,10 +1,10 @@
 import { Box, VStack } from "@chakra-ui/react";
+import React from "react";
+import { TodoCreationForm } from "./TodoCreationForm/TodoCreationForm";
+import { TodoList } from "./TodoList/TodoList";
+import { useTodoList } from "./TodoList/useTodoList";
 import { TodoListFilter } from "./TodoListFilter/TodoListFilter";
 import { useTodoListFilter } from "./TodoListFilter/useTodoListFilter";
-import { useTodoList } from "./TodoList/useTodoList";
-
-import { TodoList } from "./TodoList/TodoList";
-import { TodoCreationForm } from "./TodoCreationForm/TodoCreationForm";
 
 export function TodoApp() {
   const todoListFilter = useTodoListFilter();
@@ -16,7 +16,12 @@ export function TodoApp() {
         <TodoListFilter {...todoListFilter} />
         <TodoCreationForm createTodo={createTodo} />
         <TodoList
-          query={todoListFilter.query} status={todoListFilter.status} todoList={todoList} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+          query={todoListFilter.query}
+          status={todoListFilter.status}
+          todoList={todoList}
+          toggleTodo={toggleTodo}
+          deleteTodo={deleteTodo}
+        />
       </VStack>
     </Box>
   );
