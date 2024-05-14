@@ -5,7 +5,7 @@ import {
   HStack,
   Input,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { UseTodoListReturn } from "../TodoList/useTodoList"; //createTodoの型を受け取る
 
@@ -20,7 +20,7 @@ export function TodoCreationForm({ createTodo }: TodoCreationFormProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTaskName(e.target.value);
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ export function TodoCreationForm({ createTodo }: TodoCreationFormProps) {
     }
 
     if (newTaskName.trim() === "") {
-      setTitleError("タスク名を入力してください")
+      setTitleError("タスク名を入力してください");
       inputRef.current.focus();
       return;
     }
@@ -38,15 +38,19 @@ export function TodoCreationForm({ createTodo }: TodoCreationFormProps) {
     createTodo({ title: newTaskName });
     setNewTaskName("");
     setTitleError(undefined);
-  }
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-    >
+    <form onSubmit={handleSubmit}>
       <HStack gap={2} align="start">
         <FormControl isInvalid={!!titleError}>
-          <Input ref={inputRef} value={newTaskName} size="sm" placeholder="Learn React" onChange={handleChange} />
+          <Input
+            ref={inputRef}
+            value={newTaskName}
+            size="sm"
+            placeholder="Learn React"
+            onChange={handleChange}
+          />
           <FormErrorMessage>{titleError}</FormErrorMessage>
         </FormControl>
         <Button type="submit" size="sm">
