@@ -3,7 +3,7 @@ import React from "react";
 import { expect, jest, test } from "@jest/globals";
 
 import "@testing-library/jest-dom/jest-globals";
-import { render, screen, getAllByAltText } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { TodoCreationForm } from "./TodoCreationForm";
